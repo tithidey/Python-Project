@@ -1,55 +1,66 @@
+# declare a dictionary
+# print the menu
 def printMenu():
-    print("Todo List Menu")
-    print("1. View Tasks")
+    print("Todo List Menu:")
+    print("1. View Task")
     print("2. Add a Task")
     print("3. Remove a Task")
     print("4. Exit")
 
-def userChoice():
-    while True: 
-        choices = ("1","2","3","4")
-        choice = input("Enter your choice: ")
-        if choice not in choices:
-            print("Invalid Choice")
+
+def getChoice():
+    while True:
+        valid_choices = ('1','2','3','4')
+        userChoice = input("Enter your choice: ")
+        if userChoice not in valid_choices:
+            print("Invalid choices")
         else:
             break
-    return choice
-
-def viewTask(tasks):
+    return userChoice
+def display_tasks(tasks):
     if not tasks:
-        print("No Tasks in the list.")
+        print('No tasks in the list.')
         return
-    for index, item in enumerate(tasks, start=1):
-        print(f"{index} . {item}")
+    for index, task in enumerate(tasks, start=1):
+        print(f'{index}. {task}')
+def add_task(tasks):
+    while True:
+        task = input('Enter a new task: ').strip()
+        if len(task) != 0:
+            tasks.append(task)
+            break
+        else:
+            print("Invalid task!")
 
-def addTask(tasks):
-    adding_task = input("Enter your task: ")
-    tasks.append(adding_task)
-
-def removingTask(tasks):
+def remove_task(tasks):
+    display_tasks(tasks)
     while True:
         try:
-            task = int(input("Which task you want to remove: "))
-            if 1 <= task <= len(tasks):
-                tasks.pop(task - 1)
+            task_number = int(input('Enter the task number: '))
+            #if task_number >= 1 and task_number <= len(tasks)
+            if 1 <= task_number <= len(tasks):
+                tasks.pop(task_number - 1)
                 break
             else:
-                raise ValueError
+                raise ValueError     
         except ValueError:
-            print('Invalid Task number')
+            print('Invalid task number ')
 
 def main():
     tasks = []
     while True:
         printMenu()
-        choice = userChoice()
+        
+        choice = getChoice()
+
         if choice == '1':
-            viewTask(tasks)
+            display_tasks(tasks)
         elif choice == '2':
-            addTask(tasks)
+            add_task(tasks)
         elif choice == '3':
-            removingTask(tasks)
+            remove_task(tasks)
         else:
             break
+
 main()
 
